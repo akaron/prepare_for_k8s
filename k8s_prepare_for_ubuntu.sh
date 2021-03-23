@@ -1,6 +1,5 @@
 #!/bin/bash
 # For ubuntu-18.04.5-live-server-amd64.iso
-# you should manually setup the username, hostname, network, and firewall (22,6443,10250 for master node)
 set -ex
 
 # set-up repositories
@@ -71,7 +70,8 @@ ufw allow 10250/tcp
 ufw enable
 
 
-# add to sudoers (and no password?)
+# [optional] add to sudoers (and no password?)
+# the purpose is for ansible to control this node as root
 usermod -aG docker kai
 
 # uncomment and modify these if necessary
