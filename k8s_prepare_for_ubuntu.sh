@@ -6,6 +6,7 @@ set -ex
 apt-get update
 apt-get upgrade -y
 apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release ntp
+# add nfs-common if use nfs-provisioner
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
@@ -63,9 +64,11 @@ swapoff -a
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow 22/tcp
+ufw allow 179/tcp
 ufw allow 2379/tcp
 ufw allow 2380/tcp
 ufw allow 6443/tcp
+ufw allow 10248/tcp
 ufw allow 10250/tcp
 ufw enable
 
