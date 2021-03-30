@@ -1,5 +1,5 @@
 #!/bin/bash
-# For CentOS-7-x86_64_DVD_1908.iso
+# For CentOS-7-x86_64-DVD_1908.iso and CentOS-7-x86_64-Everything-2009.iso
 # run as root
 set -ex
 
@@ -8,6 +8,7 @@ yum remove docker docker-client docker-client-latest docker-common docker-latest
 yum install -y yum-utils python3 libselinux-python3
 yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
 yum install -y docker-ce docker-ce-cli containerd.io
+systemctl start docker
 
 # set up kubernetes repo and install
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
@@ -29,7 +30,6 @@ systemctl enable --now kubelet
 
 
 # use the systemd cgroup driver 
-systemctl start docker
 cat > /etc/docker/daemon.json <<EOF
 {
     "exec-opts": ["native.cgroupdriver=systemd"],
@@ -59,9 +59,8 @@ EOF
 sysctl --system
 
 # turn off swap
-#cp /etc/fstab /etc/fstab.bak
-# sed -i.bak 's/\/swap.img/#\/swap.img/' /etc/fstab
-# swapoff -a
+swapoff -a
+sed -i.bak 's/\/dev\/mapper\/centos-swap/#\/dev\/mapper\/centos-swap/' /etc/fstab
 
 # ufw (worker nodes may not need that many ports open)
 # ufw default deny incoming
@@ -89,3 +88,8 @@ echo \
 
 Once these are ready, should able to install a k8s cluster."
 
+echo \
+    "For CentOS 7, edit the file /var/lib/kubelet/config.yaml
+change the line of 'resolvConf' to
+resolvConf: /etc/resolv.conf
+"
