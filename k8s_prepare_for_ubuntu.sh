@@ -5,7 +5,7 @@ set -ex
 # set-up repositories
 apt-get update
 apt-get upgrade -y
-apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release ntp
+apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release ntp nfs-common
 # add nfs-common if use nfs-provisioner
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
