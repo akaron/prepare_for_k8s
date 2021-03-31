@@ -5,10 +5,11 @@ set -ex
 
 # set-up repositories and install docker
 yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
-yum install -y yum-utils python3 libselinux-python3 nfs-utils
+yum install -y yum-utils python3 libselinux-python3 ntp nfs-utils
 yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
 yum install -y docker-ce docker-ce-cli containerd.io
 systemctl enable --now docker
+systemctl enable --now ntpd
 
 # set up kubernetes repo and install
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
@@ -92,4 +93,5 @@ echo \
     "For CentOS 7, edit the file /var/lib/kubelet/config.yaml
 change the line of 'resolvConf' to
 resolvConf: /etc/resolv.conf
+and restart kubelet service
 "
