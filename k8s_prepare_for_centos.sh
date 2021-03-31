@@ -5,10 +5,10 @@ set -ex
 
 # set-up repositories and install docker
 yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
-yum install -y yum-utils python3 libselinux-python3
+yum install -y yum-utils python3 libselinux-python3 nfs-utils
 yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
 yum install -y docker-ce docker-ce-cli containerd.io
-systemctl start docker
+systemctl enable --now docker
 
 # set up kubernetes repo and install
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
