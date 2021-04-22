@@ -75,7 +75,7 @@ ufw enable
 
 # [optional] add to sudoers (and no password?)
 # the purpose is for ansible to control this node as root
-usermod -aG docker kai
+usermod -aG docker ubuntu
 
 # uncomment and modify these if necessary
 echo \
@@ -84,7 +84,7 @@ echo \
 # hostnamectl set-hostname k8s-master1
 # # config private network (assume external one has been configured)
 # # add the following in visudo
-# kai    ALL=(ALL) NOPASSWD:ALL
+# ubuntu ALL=(ALL) NOPASSWD:ALL
 
 Once these are ready, should able to install a k8s cluster."
 

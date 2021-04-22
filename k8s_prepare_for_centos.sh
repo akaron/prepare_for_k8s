@@ -78,14 +78,14 @@ sed -i.bak 's/\/dev\/mapper\/centos-swap/#\/dev\/mapper\/centos-swap/' /etc/fsta
 
 # [optional] add to sudoers (and no password?)
 # the purpose is for ansible to control this node as root
-usermod -aG docker kai
+usermod -aG docker centos
 
 # uncomment and modify these if necessary
 echo \
 "Run the following if necessary:
 # # config private network if not yet
 # # add the following in visudo
-# kai    ALL=(ALL) NOPASSWD:ALL
+# centos    ALL=(ALL) NOPASSWD:ALL
 
 Once these are ready, should able to install a k8s cluster."
 
